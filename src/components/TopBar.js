@@ -16,9 +16,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
+// import MailIcon from '@mui/icons-material/Mail';
 import GroupIcon from '@mui/icons-material/Group';
 import DvrIcon from '@mui/icons-material/Dvr';
+import Socios from "./Socios";
+// import {Link, Route, Switch} from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -145,8 +147,9 @@ export default function PersistentDrawerLeft() {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        
+        <Socios/>
       </Main>
     </Box>
+    
   );
 }
