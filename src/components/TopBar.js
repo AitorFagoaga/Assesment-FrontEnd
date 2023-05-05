@@ -19,8 +19,20 @@ import ListItemText from '@mui/material/ListItemText';
 // import MailIcon from '@mui/icons-material/Mail';
 import GroupIcon from '@mui/icons-material/Group';
 import DvrIcon from '@mui/icons-material/Dvr';
+import Button from '@mui/material/Button';
+import { StaticRouter } from 'react-router-dom/server';
+import PropTypes from 'prop-types';
 import Socios from "./Socios";
-// import {Link, Route, Switch} from 'react-router-dom';
+import Spa from "./Spa"
+import SideBar from "./SideBar";
+import {Link, Route, Routes, BrowserRouter} from 'react-router-dom';
+// import {
+//     Link as RouterLink,
+//     Route,
+//     Routes,
+//     MemoryRouter,
+//     useLocation,
+//   } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -69,6 +81,22 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
+// const LinkBehavior = React.forwardRef((props, ref) => (
+//     <RouterLink ref={ref} to="/" {...props} role={undefined} />
+//   ));
+//   function Router(props) {
+//     const { children } = props;
+//     if (typeof window === 'undefined') {
+//       return <StaticRouter location="/">{children}</StaticRouter>;
+//     }
+  
+//     return <MemoryRouter>{children}</MemoryRouter>;
+//   }
+  
+//   Router.propTypes = {
+//     children: PropTypes.node,
+//   };
+
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -82,6 +110,7 @@ export default function PersistentDrawerLeft() {
   };
 
   return (
+    
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
@@ -122,33 +151,43 @@ export default function PersistentDrawerLeft() {
         <List>
            {['Socios', 'Planes'].map((text, index) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton>
+              <ListItemButton component={Link} to={"./Socios"}>
                 <ListItemIcon>
                   {index % 2 === 0 ? <GroupIcon /> : <DvrIcon />}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
             </ListItem>
-          ))}          
-        {/* </List>
+          ))}     
+
+                
+        </List>
         <Divider />
-        <List> */}
+        <List>
           {['Prospectos', 'Empresas/Alianzas'].map((text, index) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton>
+              <ListItemButton component={Link} to={"./Spa"}>
                 <ListItemIcon>
                   {index % 2 === 0 ? <DvrIcon /> : <GroupIcon />}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
+              
             </ListItem>
           ))}
         </List>
+        {/* <SideBar/> */}
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <Socios/>
+
+        <Routes>
+        <Route path="/Socios" element={<Socios />} />
+        <Route path="/Spa" element={<Spa />} />
+        </Routes>
+            
       </Main>
+      
     </Box>
     
   );
