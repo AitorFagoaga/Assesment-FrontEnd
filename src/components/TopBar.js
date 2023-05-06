@@ -151,7 +151,7 @@ export default function PersistentDrawerLeft() {
         <List>
            {['Socios', 'Planes'].map((text, index) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton component={Link} to={"./Socios"}>
+              <ListItemButton component={Link} to={index % 2 === 0 ? "./Socios": "/Spa"}>
                 <ListItemIcon>
                   {index % 2 === 0 ? <GroupIcon /> : <DvrIcon />}
                 </ListItemIcon>
@@ -166,7 +166,7 @@ export default function PersistentDrawerLeft() {
         <List>
           {['Prospectos', 'Empresas/Alianzas'].map((text, index) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton component={Link} to={"./Spa"}>
+              <ListItemButton component={Link} to={"/"}>
                 <ListItemIcon>
                   {index % 2 === 0 ? <DvrIcon /> : <GroupIcon />}
                 </ListItemIcon>

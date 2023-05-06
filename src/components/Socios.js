@@ -7,6 +7,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import Button from '@mui/material/Button';
+
 
 const columns = [
   { id: 'name', label: 'Name', minWidth: 170 },
@@ -39,6 +41,13 @@ const columns = [
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
+  {
+    id: 'edit',
+    label: 'Edit',
+    minWidth: 170,
+    align: 'right',
+    format: (value) => value.toLocaleString('en-US'),
+  }
   
 ];
 
@@ -105,10 +114,14 @@ export default function StickyHeadTable() {
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
+                         {column.format && typeof value === 'number'
                             ? column.format(value)
-                            : value}
-                        </TableCell>
+                            : value}        
+                            {column.id === "edit" ?  
+                            <Button variant="contained">Edit</Button>
+                          : null }
+                        </TableCell>               
+                        
                       );
                     })}
                   </TableRow>
