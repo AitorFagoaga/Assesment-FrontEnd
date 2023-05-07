@@ -19,20 +19,12 @@ import ListItemText from '@mui/material/ListItemText';
 // import MailIcon from '@mui/icons-material/Mail';
 import GroupIcon from '@mui/icons-material/Group';
 import DvrIcon from '@mui/icons-material/Dvr';
-import Button from '@mui/material/Button';
-import { StaticRouter } from 'react-router-dom/server';
-import PropTypes from 'prop-types';
+// import Button from '@mui/material/Button';
 import Socios from "./Socios";
-import Spa from "./Spa"
-import SideBar from "./SideBar";
-import {Link, Route, Routes, BrowserRouter} from 'react-router-dom';
-// import {
-//     Link as RouterLink,
-//     Route,
-//     Routes,
-//     MemoryRouter,
-//     useLocation,
-//   } from 'react-router-dom';
+import Spa from "./Spa";
+import Edit from "./Edit";
+import {Link, Route, Routes} from 'react-router-dom';
+
 
 const drawerWidth = 240;
 
@@ -184,6 +176,7 @@ export default function PersistentDrawerLeft() {
         <Routes>
         <Route path="/Socios" element={<Socios />} />
         <Route path="/Spa" element={<Spa />} />
+        <Route path="/Edit" element={<Edit />} />
         </Routes>
             
       </Main>

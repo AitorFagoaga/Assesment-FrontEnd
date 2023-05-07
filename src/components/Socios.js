@@ -8,6 +8,9 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
+import Edit from './Edit';
+import {Link, Route, Routes} from 'react-router-dom';
+import ListItemButton from '@mui/material/ListItemButton';
 
 
 const columns = [
@@ -43,35 +46,43 @@ const columns = [
   },
   {
     id: 'edit',
-    label: 'Edit',
+    label: '',
     minWidth: 170,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
-  }
+  },
+  {
+    id: 'baja',
+    label: '',
+    minWidth: 170,
+    align: 'right',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+
   
 ];
 
-function createData(name, code, population, size) {
+function createData(id,name, code, population, size) {
   const density = population / size;
-  return { name, code, population, size, density };
+  return { id,name, code, population, size, density };
 }
 
 const rows = [
-  createData('India', 'IN', 1324171354, 3287263),
-  createData('China', 'CN', 1403500365, 9596961),
-  createData('Italy', 'IT', 60483973, 301340),
-  createData('United States', 'US', 327167434, 9833520),
-  createData('Canada', 'CA', 37602103, 9984670),
-  createData('Australia', 'AU', 25475400, 7692024),
-  createData('Germany', 'DE', 83019200, 357578),
-  createData('Ireland', 'IE', 4857000, 70273),
-  createData('Mexico', 'MX', 126577691, 1972550),
-  createData('Japan', 'JP', 126317000, 377973),
-  createData('France', 'FR', 67022000, 640679),
-  createData('United Kingdom', 'GB', 67545757, 242495),
-  createData('Russia', 'RU', 146793744, 17098246),
-  createData('Nigeria', 'NG', 200962417, 923768),
-  createData('Brazil', 'BR', 210147125, 8515767),
+  createData(1,'India', 'IN', 1324171354, 3287263),
+  createData(2,'China', 'CN', 1403500365, 9596961),
+  createData(3,'Italy', 'IT', 60483973, 301340),
+  createData(4,'United States', 'US', 327167434, 9833520),
+  createData(5,'Canada', 'CA', 37602103, 9984670),
+  createData(6,'Australia', 'AU', 25475400, 7692024),
+  createData(7,'Germany', 'DE', 83019200, 357578),
+  createData(8,'Ireland', 'IE', 4857000, 70273),
+  createData(9,'Mexico', 'MX', 126577691, 1972550),
+  createData(10,'Japan', 'JP', 126317000, 377973),
+  createData(11,'France', 'FR', 67022000, 640679),
+  createData(12,'United Kingdom', 'GB', 67545757, 242495),
+  createData(13,'Russia', 'RU', 146793744, 17098246),
+  createData(14,'Nigeria', 'NG', 200962417, 923768),
+  createData(15,'Brazil', 'BR', 210147125, 8515767),
 ];
 
 export default function StickyHeadTable() {
@@ -118,7 +129,22 @@ export default function StickyHeadTable() {
                             ? column.format(value)
                             : value}        
                             {column.id === "edit" ?  
-                            <Button variant="contained">Edit</Button>
+                            <Button variant="contained">
+                              <ListItemButton component={Link} to="/Edit">
+                                Edit
+                              </ListItemButton>
+                              </Button>
+                          : null }
+                          {column.id === "baja" ?  
+                            <Button variant="contained"
+                            // sx={{
+                             
+                            //   color: 'success.main',
+                            //   '& .MuiSlider-thumb': {
+                            //     borderRadius: '1px',
+                            //   },
+                            // }}
+                            >Baja</Button>
                           : null }
                         </TableCell>               
                         
@@ -139,6 +165,9 @@ export default function StickyHeadTable() {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+      <Routes>
+        <Route path="/Edit" element={<Edit />} />
+        </Routes>
     </Paper>
   );
 }
