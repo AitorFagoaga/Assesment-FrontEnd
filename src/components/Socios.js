@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState}  from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,86 +8,96 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
-import Edit from './Edit';
-import {Link, Route, Routes} from 'react-router-dom';
-import ListItemButton from '@mui/material/ListItemButton';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
 
-const columns = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
-  {
-    id: 'population',
-    label: 'Population',
-    minWidth: 170,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'size',
-    label: 'Size\u00a0(km\u00b2)',
-    minWidth: 170,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'density',
-    label: 'Density',
-    minWidth: 170,
-    align: 'right',
-    format: (value) => value.toFixed(2),
-  },
-  {
-    id: 'size',
-    label: 'Size\u00a0(km\u00b2)',
-    minWidth: 170,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'edit',
-    label: '',
-    minWidth: 170,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'baja',
-    label: '',
-    minWidth: 170,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
-  },
 
-  
-];
+import axios from 'axios';
 
-function createData(id,name, code, population, size) {
-  const density = population / size;
-  return { id,name, code, population, size, density };
-}
+const url='http://localhost:3004/socios/'
 
-const rows = [
-  createData(1,'India', 'IN', 1324171354, 3287263),
-  createData(2,'China', 'CN', 1403500365, 9596961),
-  createData(3,'Italy', 'IT', 60483973, 301340),
-  createData(4,'United States', 'US', 327167434, 9833520),
-  createData(5,'Canada', 'CA', 37602103, 9984670),
-  createData(6,'Australia', 'AU', 25475400, 7692024),
-  createData(7,'Germany', 'DE', 83019200, 357578),
-  createData(8,'Ireland', 'IE', 4857000, 70273),
-  createData(9,'Mexico', 'MX', 126577691, 1972550),
-  createData(10,'Japan', 'JP', 126317000, 377973),
-  createData(11,'France', 'FR', 67022000, 640679),
-  createData(12,'United Kingdom', 'GB', 67545757, 242495),
-  createData(13,'Russia', 'RU', 146793744, 17098246),
-  createData(14,'Nigeria', 'NG', 200962417, 923768),
-  createData(15,'Brazil', 'BR', 210147125, 8515767),
-];
+
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
 
 export default function StickyHeadTable() {
+  const [data, setData]=React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [open, setOpen] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [eliminar, setEliminar] = useState(false);
+  const [create, setCreate] = React.useState({
+    id:'',
+    name:'',
+    plan:'', 
+    dni:'', 
+    telefono:'', 
+  })
+  
+  const peticionGet=async()=>{
+    await axios.get(url)
+    .then(response=>{
+      setData(response.data);
+    })
+  }
+
+  const peticionPost=async()=>{
+    await axios.post(url, create)
+    .then(response=>{
+      setData(data.concat(response.data));
+      handleClickOpen()
+    })
+  }
+
+  const peticionPut = async () => {
+    await axios.put(url + create.id, create)
+    .then(response=>{
+      var newData = data;
+      newData.map(socio=>{
+        if(create.id === socio.id){
+         socio.name = create.name;
+          socio.plan = create.plan;
+          socio.dni = create.dni;
+          socio.telefono = create.telefono;
+        }
+      })
+      setData(newData);
+       handleEdit();
+    })
+  }
+
+  const peticionDelete = async ()=>{
+    await axios.delete(url + create.id)
+    .then(response=>{
+      setData(data.filter(socio=>socio.id !== create.id))
+    }) 
+    handleEliminar();
+  }
+
+  const handleClickOpen = () => {
+    setOpen(!open);
+
+    console.log(data.length+1)
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -98,76 +108,152 @@ export default function StickyHeadTable() {
     setPage(0);
   };
 
+  const handleChange = e => {
+    const {name, value} = e.target;
+    setCreate(prevState => ({
+      ...prevState,
+      [name]:value
+    }))
+    console.log(create)
+  }
+
+  const handleEdit = ()=>{
+   return setEdit(!edit);
+  }
+
+  const handleEliminar = ()=>{
+    return setEliminar(!eliminar);
+   }
+
+  const selectSocio=(socio, event)=>{
+    setCreate(socio);
+    return (event ==='Edit')?handleEdit(true):handleEliminar()
+  }
+
+
+  useEffect(()=>{
+     peticionGet()
+  },[])
+
+
+  const bodyInsertar=(
+      <div>
+      <Box
+       sx={style}
+       >                                   
+       <TextField id="filled-basic" label="Disabled" name='id' value={data.length+1} onChange={handleChange} disabled/>
+       
+       <TextField id="filled-basic" label="Nombre" variant="filled" name='name' onChange={handleChange}/>
+       <TextField id="filled-basic" label="Plan" variant="filled" name='plan'  onChange={handleChange}/>
+       <TextField id="filled-basic" label="DNI" variant="filled" name='dni'  onChange={handleChange}/>
+       <TextField id="filled-basic" label="Telefono" variant="filled" name='telefono' onChange={handleChange}/>
+    <div>
+    <Button onClick={()=>handleClose()}>Cancel</Button>
+    <Button onClick={()=>peticionPost()}>Subscribe</Button>
+    </div>
+     </Box>
+  </div>
+  )
+
+  const bodyEdit=(
+    <div>
+    <Box
+     sx={style}
+     >                                   
+     <TextField id="filled-basic" label="Disabled" name='id' value={create && create.id} onChange={handleChange} disabled/>
+     
+     <TextField id="filled-basic" label="Nombre" variant="filled" name='name' value={create && create.name}  onChange={handleChange}/>
+     <TextField id="filled-basic" label="Plan" variant="filled" name='plan' value={create && create.plan}  onChange={handleChange}/>
+     <TextField id="filled-basic" label="DNI" variant="filled" name='dni' value={create && create.dni}  onChange={handleChange}/>
+     <TextField id="filled-basic" label="Telefono" variant="filled" name='telefono' value={create && create.telefono}  onChange={handleChange}/>
+  <div>
+  <Button onClick={()=>handleEdit()}>Cancel</Button>
+  <Button onClick={()=>peticionPut()}>Editar</Button>
+  </div>
+   </Box>
+</div>
+)
+
+    const bodyEliminar=(
+      <Box sx={style}>
+    <Typography id="modal-modal-title" variant="h6" component="h2">
+      Seguro quiere eliminar al socio {create && create.name}
+    </Typography>
+    <div>
+  <Button onClick={()=>handleEliminar()}>Cancel</Button>
+  <Button onClick={()=>peticionDelete()}>Eliminar</Button>
+  </div>
+  </Box>
+    )
+
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
+            <TableCell>Nombre</TableCell>
+             <TableCell>Plan</TableCell>
+             <TableCell>DNI</TableCell>
+             <TableCell>telefono</TableCell>
+             <TableCell>Alta</TableCell>
+             <TableCell>Email</TableCell>
+             <TableCell>Nacimiento</TableCell>
+             <TableCell></TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                         {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}        
-                            {column.id === "edit" ?  
-                            <Button variant="contained">
-                              <ListItemButton component={Link} to="/Edit">
-                                Edit
-                              </ListItemButton>
-                              </Button>
-                          : null }
-                          {column.id === "baja" ?  
-                            <Button variant="contained"
-                            // sx={{
-                             
-                            //   color: 'success.main',
-                            //   '& .MuiSlider-thumb': {
-                            //     borderRadius: '1px',
-                            //   },
-                            // }}
-                            >Baja</Button>
-                          : null }
-                        </TableCell>               
-                        
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
+         <TableBody>
+           {data.map(socio=>(
+             <TableRow >
+               <TableCell>{socio.name}</TableCell>
+               <TableCell>{socio.plan}</TableCell>
+               <TableCell>{socio.dni}</TableCell>
+               <TableCell>{socio.telefono}</TableCell>
+               <TableCell>
+                 <Button onClick={()=>selectSocio(socio, "Edit")}>Editar</Button>
+                 <Button  onClick={()=>selectSocio(socio, 'Eliminar')}>Eliminar</Button>
+                 </TableCell>
+             </TableRow>
+           ))}
+         </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={data.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <Routes>
-        <Route path="/Edit" element={<Edit />} />
-        </Routes>
+      <TableCell>
+      <Button onClick={()=>handleClickOpen()}>Nuevo Socio</Button>
+      </TableCell>
+      <Modal
+     open={open}
+     onClose={handleClickOpen}
+     aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        >
+        {bodyInsertar}
+     </Modal>
+     <Modal
+     open={edit}
+     onClose={handleEdit}
+     aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        >
+        {bodyEdit}
+     </Modal>
+     <Modal
+     open={eliminar}
+     onClose={handleEliminar}
+     aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        >
+        {bodyEliminar}
+     </Modal>
     </Paper>
   );
 }
