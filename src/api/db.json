@@ -1,0 +1,25 @@
+{
+  "Socios": [
+    {
+      "id": 1,
+      "name": "juan",
+      "plan": "hl",
+      "dni": 190290283,
+      "telefono": 123000
+    },
+    {
+      "id": 3,
+      "name": "MARTIN",
+      "plan": "af",
+      "dni": "123",
+      "telefono": "134000"
+    },
+    {
+      "id": 4,
+      "name": "rodrigo",
+      "plan": "rd",
+      "dni": "129013",
+      "telefono": "1239"
+    }
+  ]
+}
