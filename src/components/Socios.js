@@ -12,12 +12,19 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import TimelinePagos from './TimelinePagos';
 
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import NativeSelect from '@mui/material/NativeSelect';
 
 
 import axios from 'axios';
+import { Divider } from '@mui/material';
+import { Stack } from '@mui/system';
 
-const url='http://localhost:3004/socios/'
+const apiUrl='http://localhost:3004/socios/'
 
 
 
@@ -31,6 +38,7 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  '& .MuiTextField-root': { m: 1, width: '25ch' }
 };
 
 
@@ -40,7 +48,9 @@ export default function StickyHeadTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [hPagos, setHPagos] = useState(false);
   const [eliminar, setEliminar] = useState(false);
+  const [plan, setPlan] = useState('');
   const [create, setCreate] = React.useState({
     id:'',
     name:'',
@@ -50,14 +60,14 @@ export default function StickyHeadTable() {
   })
   
   const peticionGet=async()=>{
-    await axios.get(url)
+    await axios.get(apiUrl)
     .then(response=>{
       setData(response.data);
     })
   }
 
   const peticionPost=async()=>{
-    await axios.post(url, create)
+    await axios.post(apiUrl, create)
     .then(response=>{
       setData(data.concat(response.data));
       handleClickOpen()
@@ -65,7 +75,7 @@ export default function StickyHeadTable() {
   }
 
   const peticionPut = async () => {
-    await axios.put(url + create.id, create)
+    await axios.put(apiUrl + create.id, create)
     .then(response=>{
       var newData = data;
       newData.map(socio=>{
@@ -82,7 +92,7 @@ export default function StickyHeadTable() {
   }
 
   const peticionDelete = async ()=>{
-    await axios.delete(url + create.id)
+    await axios.delete(apiUrl + create.id)
     .then(response=>{
       setData(data.filter(socio=>socio.id !== create.id))
     }) 
@@ -125,6 +135,12 @@ export default function StickyHeadTable() {
     return setEliminar(!eliminar);
    }
 
+   const handleHPagos = () => {
+    setHPagos(!hPagos);
+
+    
+  };
+
   const selectSocio=(socio, event)=>{
     setCreate(socio);
     return (event ==='Edit')?handleEdit(true):handleEliminar()
@@ -141,16 +157,36 @@ export default function StickyHeadTable() {
       <Box
        sx={style}
        >                                   
-       <TextField id="filled-basic" label="Disabled" name='id' value={data.length+1} onChange={handleChange} disabled/>
+       <TextField id="filled-basic" label="ID" name='id' value={data.length+1} onChange={handleChange} disabled/>
        
        <TextField id="filled-basic" label="Nombre" variant="filled" name='name' onChange={handleChange}/>
-       <TextField id="filled-basic" label="Plan" variant="filled" name='plan'  onChange={handleChange}/>
+       {/* <TextField id="filled-basic" label="Plan" variant="filled" name='plan'  onChange={handleChange}/> */}
+       <Box sx={{ width: '70%' ,paddingLeft: 1.2 }}>
+       <FormControl fullWidth>
+        <InputLabel variant="standard" htmlFor="filled-basic">
+          Plan
+        </InputLabel>
+        <NativeSelect
+          defaultValue={"Plan1"}
+          inputProps={{
+            name: 'plan',
+            id: 'filled-basic',
+          }}
+          onChange={handleChange}
+        >
+          <option >Plan1</option>
+          <option >Plan2</option>
+          <option >Plan3</option>
+        </NativeSelect>
+      </FormControl>
+      </Box>
        <TextField id="filled-basic" label="DNI" variant="filled" name='dni'  onChange={handleChange}/>
        <TextField id="filled-basic" label="Telefono" variant="filled" name='telefono' onChange={handleChange}/>
-    <div>
-    <Button onClick={()=>handleClose()}>Cancel</Button>
-    <Button onClick={()=>peticionPost()}>Subscribe</Button>
-    </div>
+       
+    <Stack direction="row" spacing={2} sx={{ paddingTop: 2 }} >
+    <Button  onClick={()=>handleClose()}>Cancel</Button>
+    <Button variant="contained" color="success" onClick={()=>peticionPost()}>Inscribir</Button>
+    </Stack>
      </Box>
   </div>
   )
@@ -163,7 +199,26 @@ export default function StickyHeadTable() {
      <TextField id="filled-basic" label="Disabled" name='id' value={create && create.id} onChange={handleChange} disabled/>
      
      <TextField id="filled-basic" label="Nombre" variant="filled" name='name' value={create && create.name}  onChange={handleChange}/>
-     <TextField id="filled-basic" label="Plan" variant="filled" name='plan' value={create && create.plan}  onChange={handleChange}/>
+     {/* <TextField id="filled-basic" label="Plan" variant="filled" name='plan' value={create && create.plan}  onChange={handleChange}/> */}
+     <Box sx={{ width: '70%' ,paddingLeft: 1.2 }}>
+       <FormControl fullWidth>
+        <InputLabel variant="standard" htmlFor="filled-basic">
+          Plan
+        </InputLabel>
+        <NativeSelect
+          value={create && create.plan}
+          inputProps={{
+            name: 'plan',
+            id: 'filled-basic',
+          }}
+          onChange={handleChange}
+        >
+          <option >Plan1</option>
+          <option >Plan2</option>
+          <option >Plan3</option>
+        </NativeSelect>
+      </FormControl>
+      </Box>
      <TextField id="filled-basic" label="DNI" variant="filled" name='dni' value={create && create.dni}  onChange={handleChange}/>
      <TextField id="filled-basic" label="Telefono" variant="filled" name='telefono' value={create && create.telefono}  onChange={handleChange}/>
   <div>
@@ -184,6 +239,13 @@ export default function StickyHeadTable() {
   <Button onClick={()=>peticionDelete()}>Eliminar</Button>
   </div>
   </Box>
+    )
+
+    const bodyTimeline = (
+      <Box sx={style}>
+        <TimelinePagos/>
+      </Box>
+      
     )
 
   return (
@@ -210,8 +272,11 @@ export default function StickyHeadTable() {
                <TableCell>{socio.dni}</TableCell>
                <TableCell>{socio.telefono}</TableCell>
                <TableCell>
-                 <Button onClick={()=>selectSocio(socio, "Edit")}>Editar</Button>
-                 <Button  onClick={()=>selectSocio(socio, 'Eliminar')}>Eliminar</Button>
+               <Stack direction="row" spacing={2}>
+                 <Button variant="contained" color="success" onClick={()=>selectSocio(socio, "Edit")}>Editar</Button>
+                 <Button variant="outlined" color="error" onClick={()=>selectSocio(socio, 'Eliminar')}>Eliminar</Button>
+                 <Button onClick={()=>handleHPagos()}>Pagos</Button>
+                 </Stack>
                  </TableCell>
              </TableRow>
            ))}
@@ -253,6 +318,12 @@ export default function StickyHeadTable() {
         aria-describedby="modal-modal-description"
         >
         {bodyEliminar}
+     </Modal>
+     <Modal
+     open={hPagos}
+     onClose={handleHPagos}
+        >
+        {bodyTimeline}
      </Modal>
     </Paper>
   );

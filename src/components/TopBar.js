@@ -140,6 +140,21 @@ export default function PersistentDrawerLeft() {
           </IconButton>
         </DrawerHeader>
         <Divider />
+            <List>
+            
+                <ListItem disablePadding>
+                <ListItemButton component={Link} to={"/"}>
+                    <ListItemIcon>
+                    Home
+                    </ListItemIcon>
+                    <ListItemText />
+                </ListItemButton>
+                </ListItem>
+             
+
+                    
+            </List>
+        <Divider />
         <List>
            {['Socios', 'Planes'].map((text, index) => (
             <ListItem key={text} disablePadding>
