@@ -16,14 +16,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-// import MailIcon from '@mui/icons-material/Mail';
 import GroupIcon from '@mui/icons-material/Group';
 import DvrIcon from '@mui/icons-material/Dvr';
-// import Button from '@mui/material/Button';
 import Socios from "./Socios";
-import Spa from "./Spa";
+import Planes from "./Planes";
 import Home from './Home';
 import {Link, Route, Routes} from 'react-router-dom';
+import HomeIcon from '@mui/icons-material/Home';
 
 
 const drawerWidth = 240;
@@ -73,21 +72,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-// const LinkBehavior = React.forwardRef((props, ref) => (
-//     <RouterLink ref={ref} to="/" {...props} role={undefined} />
-//   ));
-//   function Router(props) {
-//     const { children } = props;
-//     if (typeof window === 'undefined') {
-//       return <StaticRouter location="/">{children}</StaticRouter>;
-//     }
-  
-//     return <MemoryRouter>{children}</MemoryRouter>;
-//   }
-  
-//   Router.propTypes = {
-//     children: PropTypes.node,
-//   };
 
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
@@ -145,9 +129,9 @@ export default function PersistentDrawerLeft() {
                 <ListItem disablePadding>
                 <ListItemButton component={Link} to={"/"}>
                     <ListItemIcon>
-                    Home
+                    <HomeIcon/>
                     </ListItemIcon>
-                    <ListItemText />
+                    <ListItemText primary={"Home"}/>
                 </ListItemButton>
                 </ListItem>
              
@@ -158,7 +142,7 @@ export default function PersistentDrawerLeft() {
         <List>
            {['Socios', 'Planes'].map((text, index) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton component={Link} to={index % 2 === 0 ? "./Socios": "/Spa"}>
+              <ListItemButton component={Link} to={index % 2 === 0 ? "./Socios": "/Planes"}>
                 <ListItemIcon>
                   {index % 2 === 0 ? <GroupIcon /> : <DvrIcon />}
                 </ListItemIcon>
@@ -191,7 +175,7 @@ export default function PersistentDrawerLeft() {
         <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Socios" element={<Socios />} />
-        <Route path="/Spa" element={<Spa />} />
+        <Route path="/Planes" element={<Planes />} />
         </Routes>
             
       </Main>
