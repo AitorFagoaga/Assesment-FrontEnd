@@ -5,15 +5,9 @@ import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
-import TimelineDot from '@mui/lab/TimelineDot';
-import FastfoodIcon from '@mui/icons-material/Fastfood';
-import LaptopMacIcon from '@mui/icons-material/LaptopMac';
-import HotelIcon from '@mui/icons-material/Hotel';
-import RepeatIcon from '@mui/icons-material/Repeat';
 import Typography from '@mui/material/Typography';
 import PaidIcon from '@mui/icons-material/Paid';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { green } from '@mui/material/colors';
+import { green, red } from '@mui/material/colors';
 
 export default function CustomizedTimeline() {
   return (
@@ -39,7 +33,7 @@ export default function CustomizedTimeline() {
           <Typography variant="h6" component="span">
             Pago Realizado
           </Typography>
-          <Typography>Plan 1</Typography>
+          <Typography>Visa: **** ***** 2968</Typography>
         </TimelineContent>
       </TimelineItem>
       <TimelineItem>
@@ -53,16 +47,16 @@ export default function CustomizedTimeline() {
         <TimelineSeparator>
           <TimelineConnector />
          
-          <PaidIcon style={{ color: green[600] }}
+          <PaidIcon style={{ color: red[600] }}
             fontSize="large"/>
           
           <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent sx={{ py: '12px', px: 2 }}>
           <Typography variant="h6" component="span">
-            Pago Realizado
+            Pago Rechazado
           </Typography>
-          <Typography>Plan 1</Typography>
+          <Typography>Visa: **** ***** 2968</Typography>
         </TimelineContent>
       </TimelineItem>
       <TimelineItem>
@@ -85,7 +79,7 @@ export default function CustomizedTimeline() {
           <Typography variant="h6" component="span">
             Pago Realizado
           </Typography>
-          <Typography>Plan 1</Typography>
+          <Typography>Visa: **** ***** 2968</Typography>
         </TimelineContent>
       </TimelineItem>
       <TimelineItem>
@@ -107,7 +101,7 @@ export default function CustomizedTimeline() {
           <Typography variant="h6" component="span">
             Pago Pendiente
           </Typography>
-          <Typography>Plan 1</Typography>
+          <Typography>Visa: **** ***** 2968</Typography>
         </TimelineContent>
       </TimelineItem>
       
