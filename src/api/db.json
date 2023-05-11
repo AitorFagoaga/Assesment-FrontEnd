@@ -2,33 +2,97 @@
   "Socios": [
     {
       "id": 1,
-      "name": "juan",
-      "plan": "hl",
+      "name": "Daniela",
+      "plan": "Baja",
       "dni": 190290283,
-      "telefono": 123000
+      "telefono": "1130609066",
+      "apellido": "Sanchez",
+      "nacimiento": "01/02/2000",
+      "email": "juansanchez@hotmail.com",
+      "alta": "08/02/2021",
+      "status": "Alta",
+      "estadoApto": "Aprobado",
+      "vencimientoApto": "18/02/2024",
+      "aptoMedico": "C:\\fakepath\\robots.txt",
+      "cuponDescuento": "20% OSDE 1 mes",
+      "nroCupon": "12344",
+      "validezCupon": "01/07/23"
+    },
+    {
+      "id": 2,
+      "name": "MARTIN",
+      "plan": "Plan2",
+      "dni": "123",
+      "telefono": "134000",
+      "apellido": "sdf",
+      "email": "martin@mail.com",
+      "nacimiento": "12/03/1990",
+      "alta": "26/05/2022",
+      "status": "Baja",
+      "estadoApto": "Aprobado",
+      "cuponDescuento": "No tiene"
     },
     {
       "id": 3,
-      "name": "MARTIN",
-      "plan": "af",
-      "dni": "123",
-      "telefono": "134000"
+      "name": "rodrigo",
+      "plan": "Plan3",
+      "dni": "129013",
+      "telefono": "1239",
+      "apellido": "gre",
+      "nacimiento": "34/10/1880",
+      "email": "tr@mail.com",
+      "alta": "15/02/2023",
+      "estadoApto": "Falta Aprobar"
     },
     {
       "id": 4,
-      "name": "rodrigo",
-      "plan": "rd",
-      "dni": "129013",
-      "telefono": "1239"
-    },
-    {
-      "id": 5,
       "name": "facundo",
-      "plan": "Plan2",
+      "plan": "Plan1",
       "dni": "432323458",
       "telefono": "12323143",
       "undefined": 10,
-      "age": "10"
+      "age": "10",
+      "apellido": "sd",
+      "email": "facundo@mail.com",
+      "nacimiento": "03/10/2005",
+      "alta": "07/05/2023",
+      "estadoApto": "Aprobado"
+    },
+    {
+      "id": 5,
+      "name": "maria",
+      "apellido": "rodriguez",
+      "plan": "Plan2",
+      "dni": "1232456",
+      "telefono": "3255466",
+      "estadoApto": "Aprobado",
+      "alta": "08/02/2021"
+    },
+    {
+      "id": 7,
+      "fileImg": "C:\\fakepath\\favicon.ico",
+      "name": "jorge",
+      "apellido": "luis",
+      "nacimiento": "21/21/21",
+      "plan": "Plan3",
+      "dni": "123809820",
+      "telefono": "1238021",
+      "estadoApto": "Aprobado"
+    },
+    {
+      "id": 8,
+      "fileImg": "",
+      "name": "sefhdo",
+      "apellido": "adflijilad",
+      "nacimiento": "12393",
+      "plan": "",
+      "dni": "2123409",
+      "telefono": "3214i21u3",
+      "email": "dfsnlad",
+      "alta": "08/02/2021",
+      "status": "",
+      "aptoMedico": "C:\\fakepath\\robots.txt",
+      "estadoApto": "Falta Aprobar"
     }
   ]
 }

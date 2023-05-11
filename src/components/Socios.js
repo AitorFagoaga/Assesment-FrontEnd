@@ -15,19 +15,21 @@ import Typography from '@mui/material/Typography';
 import TimelinePagos from './TimelinePagos';
 import LaunchIcon from '@mui/icons-material/Launch';
 import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
+import ManageHistoryIcon from '@mui/icons-material/ManageHistory';
+import Informacion from './InformacionSocio';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Link from '@mui/material/Link';
-
+import Popover from '@mui/material/Popover';
+import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
+import HistorialEdicion from './HistorialEdicion';
 import Avatar from '@mui/material/Avatar';
+import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 import axios from 'axios';
-import { Divider } from '@mui/material';
-import { color, Stack } from '@mui/system';
-import UploadImg from './UploadImg';
-import img from '../api/Captura-de-Pantalla-2023-05-08-a-la(s)-20.59.54.png'
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import { Stack } from '@mui/system';
 const apiUrl='http://localhost:3004/socios/'
 
 
@@ -37,7 +39,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 600,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -53,8 +55,11 @@ export default function StickyHeadTable() {
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
   const [hPagos, setHPagos] = useState(false);
+  const [hEdicion, setHEdicion] = useState(false);
+  const [info, setInfo] = useState(false);
   const [eliminar, setEliminar] = useState(false);
   const [fileImg, setFileImg] = useState('');
+  const [filePdf, setFilePdf] = useState('');
   const [create, setCreate] = React.useState({
     id:'',
     fileImg:'',
@@ -69,6 +74,10 @@ export default function StickyHeadTable() {
     status:'',
     aptoMedico:'',
     estadoApto:'',
+    vencimientoApto:'',
+    cuponDescuento:'',
+    nroCupon:'',
+    validezCupon:'',
   })
   
   const peticionGet=async()=>{
@@ -104,6 +113,10 @@ export default function StickyHeadTable() {
           socio.status = create.status;
           socio.aptoMedico = create.aptoMedico;
           socio.estadoApto = create.estadoApto;
+          socio.vencimientoApto = create.vencimientoApto;
+          socio.cuponDescuento = create.cuponDescuento;
+          socio.nroCupon = create.nroCupon;
+          socio.validezCupon = create.validezCupon;
         }
       })
       setData(newData);
@@ -157,12 +170,15 @@ export default function StickyHeadTable() {
 
    const handleHPagos = () => {
     setHPagos(!hPagos);
-
-    
   };
-  
 
-  
+  const handleHEdicion = () => {
+    setHEdicion(!hEdicion);
+  };
+
+  const handleInfo = () => {
+    setInfo(!info);
+  }
 
   const selectSocio=(socio, e)=>{
     setCreate(socio);
@@ -180,7 +196,6 @@ export default function StickyHeadTable() {
        sx={style}
        >                                   
        <TextField id="filled-basic" label="ID" name='id' value={data.length+1} onChange={handleChange} disabled/>
-       {/* <MuiFileInput value={file} name='file' onChange={handleFile} /> */}
        <Box sx={{ width: '70%' ,paddingLeft: 1.2, paddingTop: 1, paddingBottom:1 }}>
         <Button
           variant="contained"
@@ -195,7 +210,7 @@ export default function StickyHeadTable() {
        <TextField id="filled-basic" label="Apellido" variant="filled" name='apellido' onChange={handleChange}/>
        <TextField id="filled-basic" label="Nacimiento" variant="filled" name='nacimiento' onChange={handleChange}/>
        {/* <TextField id="filled-basic" label="Plan" variant="filled" name='plan'  onChange={handleChange}/> */}
-       <Box sx={{ width: '70%' ,paddingLeft: 1.2 }}>
+       <Box sx={{ width: '42%' ,paddingLeft: 1.2 }}>
        <FormControl fullWidth>
         <InputLabel variant="standard" htmlFor="filled-basic">
           Plan
@@ -208,6 +223,7 @@ export default function StickyHeadTable() {
           }}
           onChange={handleChange}
         >
+          <option >Elegir plan</option>
           <option >Plan1</option>
           <option >Plan2</option>
           <option >Plan3</option>
@@ -216,7 +232,7 @@ export default function StickyHeadTable() {
       </Box>
        <TextField id="filled-basic" label="DNI" variant="filled" name='dni'  onChange={handleChange}/>
        <TextField id="filled-basic" label="Telefono" variant="filled" name='telefono' onChange={handleChange}/>
-       <Box sx={{ width: '70%' ,paddingLeft: 1.2 }}>
+       <Box sx={{ width: '42%' ,paddingLeft: 1.2 }}>
        <FormControl fullWidth>
         <InputLabel variant="standard" htmlFor="filled-basic">
           Estado
@@ -229,22 +245,23 @@ export default function StickyHeadTable() {
           }}
           onChange={handleChange}
         >
+          <option >Elegir estado</option>
           <option >Alta</option>
           <option >Baja</option>
         </NativeSelect>
       </FormControl>
       </Box>
        <TextField id="filled-basic" label="Fecha de alta" variant="filled" name='alta' onChange={handleChange}/>
-       <Box sx={{ width: '70%' ,paddingLeft: 1.2, paddingTop: 1, paddingBottom:1 }}>
+       <Box sx={{ width: '42%' ,paddingLeft: 1.2, paddingTop: 1, paddingBottom:1 }}>
         <Button
           variant="contained"
           component="label"
         >
           Subir Apto medico
-          <input name='fileImg' type='file' value={fileImg} onChange={handleChange} hidden />
+          <input name='aptoMedico' type='file' value={filePdf} onChange={handleChange} hidden />
         </Button>
       </Box>
-      <Box sx={{ width: '70%' ,paddingLeft: 1.2 }}>
+      <Box sx={{ width: '42%' ,paddingLeft: 1.2 }}>
        <FormControl fullWidth>
         <InputLabel variant="standard" htmlFor="filled-basic">
           Estado
@@ -257,14 +274,38 @@ export default function StickyHeadTable() {
           }}
           onChange={handleChange}
         >
+          <option >Elegir estado de apto</option>
           <option >Aprobado</option>
           <option >Falta Aprobar</option>
         </NativeSelect>
       </FormControl>
       </Box>
-    <Stack direction="row" spacing={2} sx={{ paddingTop: 2 }} >
-    <Button  onClick={()=>handleClose()}>Cancel</Button>
-    <Button variant="contained" color="success" onClick={()=>peticionPost()}>Inscribir</Button>
+      <TextField id="filled-basic" label="Vencimiento Apto Medico" variant="filled" name='vencimientoApto' onChange={handleChange}/>
+      <Box sx={{ width: '42%' ,paddingLeft: 1.2 }}>
+       <FormControl fullWidth>
+        <InputLabel variant="standard" htmlFor="filled-basic">
+          Cupon de descuento
+        </InputLabel>
+        <NativeSelect
+          value={"No tiene"}
+          inputProps={{
+            name: 'cuponDescuento',
+            id: 'filled-basic',
+          }}
+          onChange={handleChange}
+        >
+          <option >Seleccionar</option>
+          <option >No tiene</option>
+          <option >20% OSDE 1 mes</option>
+          <option >30% 1 mes</option>
+        </NativeSelect>
+      </FormControl>
+      </Box>
+      <TextField id="filled-basic" label="Nro Cupon de descuento" variant="filled" name='nroCupon'  onChange={handleChange}/>
+      <TextField id="filled-basic" label="Valido hasta" variant="filled" name='validezCupon' onChange={handleChange}/>
+    <Stack direction="row" spacing={32} sx={{ paddingTop: 4, paddingLeft: 1 }} >
+      <Button  onClick={()=>handleClose()} color="error">Cancel</Button>
+      <Button variant="contained" color="success" onClick={()=>peticionPost()}>Inscribir</Button>
     </Stack>
      </Box>
   </div>
@@ -280,14 +321,14 @@ export default function StickyHeadTable() {
        Edicion Socio: {create && create.name}
       </Typography>           
      <TextField id="filled-basic" label="Disabled" name='id' value={create && create.id} onChange={handleChange} disabled/>
-     
+     <br/>
      <TextField id="filled-basic" label="Nombre" variant="filled" name='name' value={create && create.name}  onChange={handleChange}/>
      <TextField id="filled-basic" label="Email" variant="filled" name='email' value={create && create.email} onChange={handleChange}/>
      <TextField id="filled-basic" label="Apellido" variant="filled" name='apellido' value={create && create.apellido} onChange={handleChange}/>
      <TextField id="filled-basic" label="Nacimiento" variant="filled" name='nacimiento' value={create && create.nacimiento} onChange={handleChange}/>
      
      {/* <TextField id="filled-basic" label="Plan" variant="filled" name='plan' value={create && create.plan}  onChange={handleChange}/> */}
-     <Box sx={{ width: '70%' ,paddingLeft: 1.2 }}>
+     <Box sx={{ width: '42%' ,paddingLeft: 1.2 }}>
        <FormControl fullWidth>
         <InputLabel variant="standard" htmlFor="filled-basic">
           Plan
@@ -300,6 +341,7 @@ export default function StickyHeadTable() {
           }}
           onChange={handleChange}
         >
+          <option >Elegir plan</option>
           <option >Plan1</option>
           <option >Plan2</option>
           <option >Plan3</option>
@@ -308,7 +350,7 @@ export default function StickyHeadTable() {
       </Box>
      <TextField id="filled-basic" label="DNI" variant="filled" name='dni' value={create && create.dni}  onChange={handleChange}/>
      <TextField id="filled-basic" label="Telefono" variant="filled" name='telefono' value={create && create.telefono}  onChange={handleChange}/>
-     <Box sx={{ width: '70%' ,paddingLeft: 1.2 }}>
+     <Box sx={{ width: '42%' ,paddingLeft: 1.2 }}>
        <FormControl fullWidth>
         <InputLabel variant="standard" htmlFor="filled-basic">
           Estado
@@ -321,6 +363,7 @@ export default function StickyHeadTable() {
           }}
           onChange={handleChange}
         >
+          <option >Elegir estado</option>
           <option >Alta</option>
           <option >Baja</option>
         </NativeSelect>
@@ -328,7 +371,16 @@ export default function StickyHeadTable() {
       
       </Box>
       <TextField id="filled-basic" label="Fecha de alta" variant="filled" name='alta' value={create && create.alta} onChange={handleChange}/>
-      <Box sx={{ width: '70%' ,paddingLeft: 1.2 }}>
+      <Box sx={{ width: '42%' ,paddingLeft: 1.2, paddingTop: 1, paddingBottom:1 }}>
+        <Button
+          variant="contained"
+          component="label"
+        >
+          Subir Apto medico
+          <input name='aptoMedico' type='file' value={filePdf} onChange={handleChange} hidden />
+        </Button>
+      </Box>
+      <Box sx={{ width: '42%' ,paddingLeft: 1.2 }}>
        <FormControl fullWidth>
         <InputLabel variant="standard" htmlFor="filled-basic">
           Estado de apto medico
@@ -341,15 +393,39 @@ export default function StickyHeadTable() {
           }}
           onChange={handleChange}
         >
+          <option >Estado de apto medico</option>
           <option >Aprobado</option>
           <option >Falta Aprobar</option>
         </NativeSelect>
       </FormControl>
       </Box>
-      <Stack direction="row" spacing={2} sx={{ paddingTop: 2 }} >
-  <Button onClick={()=>handleEdit()} variant="outlined" color="error">Cancel</Button>
-  <Button onClick={()=>peticionPut()} variant="contained" color="success">Guardar</Button>
-  </Stack>
+      <TextField id="filled-basic" label="Vencimiento Apto Medico" variant="filled" name='vencimientoApto' value={create && create.vencimientoApto} onChange={handleChange}/>
+      <Box sx={{ width: '42%' ,paddingLeft: 1.2 }}>
+       <FormControl fullWidth>
+        <InputLabel variant="standard" htmlFor="filled-basic">
+          Cupon de descuento
+        </InputLabel>
+        <NativeSelect
+          value={create && create.cuponDescuento}
+          inputProps={{
+            name: 'cuponDescuento',
+            id: 'filled-basic',
+          }}
+          onChange={handleChange}
+        >
+          <option >Seleccionar</option>
+          <option >No tiene</option>
+          <option >20% OSDE 1 mes</option>
+          <option >30% 1 mes</option>
+        </NativeSelect>
+      </FormControl>
+      </Box>
+      <TextField id="filled-basic" label="Nro Cupon de descuento" variant="filled" name='nroCupon' value={create && create.nroCupon} onChange={handleChange}/>
+      <TextField id="filled-basic" label="Valido hasta" variant="filled" name='validezCupon' value={create && create.validezCupon} onChange={handleChange}/>
+      <Stack direction="row" spacing={32} sx={{ paddingTop: 4, paddingLeft: 1 }} >
+        <Button onClick={()=>handleEdit()}  color="error">Cancel</Button>
+        <Button onClick={()=>peticionPut()} variant="contained" color="success">Guardar</Button>
+    </Stack>
    </Box>
 </div>
 )
@@ -373,6 +449,20 @@ export default function StickyHeadTable() {
       
     )
 
+    const bodyHistorialeEdicion = (
+      <Box sx={style}>
+        <HistorialEdicion/>
+      </Box>
+      
+    )
+
+    const bodyInfo = (
+      <Box sx={style}>
+        <Informacion/>
+      </Box>
+      
+    )
+
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }  }>
@@ -389,6 +479,9 @@ export default function StickyHeadTable() {
              <TableCell>Email</TableCell>
              <TableCell>Cuenta Corriente</TableCell>
              <TableCell>Estado de apto medico</TableCell>
+             <TableCell>Informacion</TableCell>
+             <TableCell>Historial <BorderColorIcon/></TableCell>
+             <TableCell>Cupon de descuento</TableCell>
              <TableCell></TableCell>
              <TableCell></TableCell>
              <TableCell></TableCell>
@@ -402,13 +495,69 @@ export default function StickyHeadTable() {
                <TableCell>{socio.nacimiento}</TableCell>
                <TableCell >{socio.plan}</TableCell>
                <TableCell>{socio.dni}</TableCell>
-               <TableCell>{socio.telefono}</TableCell>
-               <TableCell style={{color: socio.status == "Baja" ? 'red':"green"}}>{socio.status == "Baja"?('Baja'):(socio.alta)}</TableCell>
-               <TableCell>{socio.email}{socio.email!== undefined ?<Link href={`mailto:${socio.email}`}><LaunchIcon/></Link>: " "}</TableCell>
+               <TableCell>{socio.telefono}{socio.telefono!== undefined ?<Link href={`https://wa.me/${socio.aptoMedico}`} target="_blank"><WhatsAppIcon sx={{fontSize: "medium"}}/></Link>: " "}</TableCell>
+               <TableCell style={{color: socio.status === "Baja" ? 'red':"green"}}>{socio.status === "Baja"?('Baja'):(socio.alta)}</TableCell>
+               <TableCell>{socio.email}{socio.email!== undefined ?<Link href={`mailto:${socio.email}`}><LaunchIcon sx={{fontSize: "medium"}}/></Link>: " "}</TableCell>
                <TableCell>
                  <Button onClick={()=>handleHPagos()}>Pagos</Button>
                  </TableCell>
-                 <TableCell>{socio.estadoApto}</TableCell>
+                 <TableCell>
+                 <PopupState variant="popover" popupId="demo-popup-popover">
+                    {(popupState) => (
+                      <div>
+                        <Button variant="text" color={socio.estadoApto === "Aprobado"?'secondary': "error" }{...bindTrigger(popupState)}>
+                        {socio.estadoApto}
+                        </Button>
+                        <Popover
+                          {...bindPopover(popupState)}
+                          anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                          }}
+                          transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center',
+                          }}
+                        >
+                          <Typography sx={{ p: 2 }}>Vcto:{socio.vencimientoApto}</Typography>
+                        </Popover>
+                        {socio.aptoMedico!== undefined ?<Link href={socio.aptoMedico} target="_blank"><LaunchIcon sx={{fontSize: "medium"}}/></Link>: " "}
+                      </div>
+                    )}
+                  </PopupState>
+                  </TableCell>
+                  <TableCell>
+                  <Button onClick={()=>handleInfo()} sx={{color:'black'}}><PermContactCalendarIcon/></Button>
+                  </TableCell>
+                  <TableCell>
+                  <Button onClick={()=>handleHEdicion()} sx={{color:'black'}}><ManageHistoryIcon/></Button>
+                  </TableCell>
+                  <TableCell>
+                    {socio.cuponDescuento !== "No tiene"? 
+                  <PopupState variant="popover" popupId="demo-popup-popover">
+                    {(popupState) => (
+                      <div>
+                        <Button variant="text" sx={{color:'black', fontSize:12}} {...bindTrigger(popupState)}>
+                        {socio.cuponDescuento}
+                        </Button>
+                        <Popover
+                          {...bindPopover(popupState)}
+                          anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                          }}
+                          transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center',
+                          }}
+                        >
+                          <Typography sx={{ p: 2 }}>Valido hasta: {socio.validezCupon}</Typography>
+                        </Popover>
+                        </div>
+                    )}
+                  </PopupState>
+                  :<Typography sx={{paddingLeft: 2}}>No tiene</Typography>}
+                  </TableCell>
                  <TableCell>
                  <Button variant="contained" color="success" onClick={()=>selectSocio(socio, "Edit")} ><BorderColorIcon/></Button>
                  </TableCell>
@@ -462,6 +611,18 @@ export default function StickyHeadTable() {
      onClose={handleHPagos}
         >
         {bodyTimeline}
+     </Modal>
+     <Modal
+     open={hEdicion}
+     onClose={handleHEdicion}
+        >
+        {bodyHistorialeEdicion}
+     </Modal>
+     <Modal
+     open={info}
+     onClose={handleInfo}
+        >
+        {bodyInfo}
      </Modal>
     </Paper>
   );
