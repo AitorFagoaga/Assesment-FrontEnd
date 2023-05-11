@@ -22,7 +22,7 @@ import DvrIcon from '@mui/icons-material/Dvr';
 // import Button from '@mui/material/Button';
 import Socios from "./Socios";
 import Spa from "./Spa";
-
+import Home from './Home';
 import {Link, Route, Routes} from 'react-router-dom';
 
 
@@ -189,6 +189,7 @@ export default function PersistentDrawerLeft() {
         <DrawerHeader />
 
         <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/Socios" element={<Socios />} />
         <Route path="/Spa" element={<Spa />} />
         </Routes>
