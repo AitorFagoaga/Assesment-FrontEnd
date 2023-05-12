@@ -14,13 +14,16 @@ Con este correra el json server como base de datos en [http://localhost:3004](ht
 
 ### `npm start`
 
-Para correr la aplicacion.\ 
+Para correr la aplicacion.
+
 Se abrira en el [http://localhost:3000](http://localhost:3000) .
 
 
 ### `npx cypress run`
 
 Para correr cypress y hacer el test
+
+Mi codigo del test se encuentra 'cypress/e2e/spec.cy.js'
 
 ##
 
