@@ -24,9 +24,9 @@ Para correr cypress y hacer el test
 
 ## Learn More
 
-Estan todas las funcionalidades pedidas
-Como tambien un crud funcional
-Tecnologías usadas:
-● React
-● Material-ui
-● Cypress
+- Estan todas las funcionalidades pedidas
+- Como tambien un crud funcional
+  Tecnologías usadas:
+  ● React
+  ● Material-ui
+  ● Cypress
