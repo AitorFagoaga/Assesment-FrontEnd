@@ -4,6 +4,30 @@
 .nav-item {
   display: flex;
 }
+.css-yfo96e {
+  background-image: url(./img/b2.jpeg);
+  background-size: cover;
+  height: 100vh;
+}
+.css-ttn1xo {
+  background-image: url(./img/b2.jpeg);
+  background-size: cover;
+  height: 100vh;
+}
+.MuiCardContent-root {
+  background-color: #1d1b1b;
+  color: #ffff;
+}
+.css-hyum1k-MuiToolbar-root {
+  background-color: #1d1b1b;
+}
+/* .css-12i7wg6-MuiPaper-root-MuiDrawer-paper {
+  background-color: #1d1b1b;
+  color: #fff;
+} */
+/* .css-46bh2p-MuiCardContent-root {
+  color: #808080;
+} */
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
