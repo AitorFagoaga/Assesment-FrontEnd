@@ -185,6 +185,10 @@ export default function StickyHeadTable() {
     return (e ==='Edit')?handleEdit(true):handleEliminar()
   }
 
+
+
+  
+
   useEffect(()=>{
      peticionGet()
   },[])
@@ -205,10 +209,10 @@ export default function StickyHeadTable() {
           <input name='fileImg' type='file' value={fileImg} onChange={handleChange} hidden />
         </Button>
       </Box>
-       <TextField id="filled-basic" label="Nombre" variant="filled" name='name' onChange={handleChange}/>
-       <TextField id="filled-basic" label="Email" variant="filled" name='email' onChange={handleChange}/>
-       <TextField id="filled-basic" label="Apellido" variant="filled" name='apellido' onChange={handleChange}/>
-       <TextField id="filled-basic" label="Nacimiento" variant="filled" name='nacimiento' onChange={handleChange}/>
+       <TextField id="filled-basic" className='name' label="Nombre" variant="filled" name='name' onChange={handleChange}/>
+       <TextField id="filled-basic" className='email' label="Email" variant="filled" name='email' onChange={handleChange}/>
+       <TextField id="filled-basic" className='apellido'label="Apellido" variant="filled" name='apellido' onChange={handleChange}/>
+       <TextField id="filled-basic" className='nacimiento' label="Nacimiento" variant="filled" name='nacimiento' onChange={handleChange}/>
        {/* <TextField id="filled-basic" label="Plan" variant="filled" name='plan'  onChange={handleChange}/> */}
        <Box sx={{ width: '42%' ,paddingLeft: 1.2 }}>
        <FormControl fullWidth>
@@ -220,6 +224,7 @@ export default function StickyHeadTable() {
           inputProps={{
             name: 'plan',
             id: 'filled-basic',
+            className:'plan'
           }}
           onChange={handleChange}
         >
@@ -230,18 +235,19 @@ export default function StickyHeadTable() {
         </NativeSelect>
       </FormControl>
       </Box>
-       <TextField id="filled-basic" label="DNI" variant="filled" name='dni'  onChange={handleChange}/>
-       <TextField id="filled-basic" label="Telefono" variant="filled" name='telefono' onChange={handleChange}/>
+       <TextField id="filled-basic" className='dni' label="DNI" variant="filled" name='dni'  onChange={handleChange}/>
+       <TextField id="filled-basic" className='tel' label="Telefono" variant="filled" name='telefono' onChange={handleChange}/>
        <Box sx={{ width: '42%' ,paddingLeft: 1.2 }}>
        <FormControl fullWidth>
         <InputLabel variant="standard" htmlFor="filled-basic">
           Estado
         </InputLabel>
         <NativeSelect
-          defaultValue={"Alta"}
+          defaultValue={"Elegir estado"}
           inputProps={{
-            name: 'plan',
+            name: 'status',
             id: 'filled-basic',
+            className:'status'
           }}
           onChange={handleChange}
         >
@@ -251,7 +257,7 @@ export default function StickyHeadTable() {
         </NativeSelect>
       </FormControl>
       </Box>
-       <TextField id="filled-basic" label="Fecha de alta" variant="filled" name='alta' onChange={handleChange}/>
+       <TextField id="filled-basic" className='fechaAlta' label="Fecha de alta" variant="filled" name='alta' onChange={handleChange}/>
        <Box sx={{ width: '42%' ,paddingLeft: 1.2, paddingTop: 1, paddingBottom:1 }}>
         <Button
           variant="contained"
@@ -267,10 +273,11 @@ export default function StickyHeadTable() {
           Estado
         </InputLabel>
         <NativeSelect
-          defaultValue={"Aprobado"}
+          defaultValue={"Elegir estado de apto"}
           inputProps={{
             name: 'estadoApto',
             id: 'filled-basic',
+            className:'estadoApto'
           }}
           onChange={handleChange}
         >
@@ -280,17 +287,18 @@ export default function StickyHeadTable() {
         </NativeSelect>
       </FormControl>
       </Box>
-      <TextField id="filled-basic" label="Vencimiento Apto Medico" variant="filled" name='vencimientoApto' onChange={handleChange}/>
+      <TextField id="filled-basic" className='vencimientoApto' label="Vencimiento Apto Medico" variant="filled" name='vencimientoApto' onChange={handleChange}/>
       <Box sx={{ width: '42%' ,paddingLeft: 1.2 }}>
        <FormControl fullWidth>
         <InputLabel variant="standard" htmlFor="filled-basic">
           Cupon de descuento
         </InputLabel>
         <NativeSelect
-          value={"No tiene"}
+          defaultValue={"Seleccionar"}
           inputProps={{
             name: 'cuponDescuento',
             id: 'filled-basic',
+            className:'cuponDescuento'
           }}
           onChange={handleChange}
         >
@@ -301,11 +309,11 @@ export default function StickyHeadTable() {
         </NativeSelect>
       </FormControl>
       </Box>
-      <TextField id="filled-basic" label="Nro Cupon de descuento" variant="filled" name='nroCupon'  onChange={handleChange}/>
-      <TextField id="filled-basic" label="Valido hasta" variant="filled" name='validezCupon' onChange={handleChange}/>
+      <TextField id="filled-basic" className='nroCupon' label="Nro Cupon de descuento" variant="filled" name='nroCupon'  onChange={handleChange}/>
+      <TextField id="filled-basic"  className='validezCupon' label="Valido hasta" variant="filled" name='validezCupon' onChange={handleChange}/>
     <Stack direction="row" spacing={32} sx={{ paddingTop: 4, paddingLeft: 1 }} >
-      <Button  onClick={()=>handleClose()} color="error">Cancel</Button>
-      <Button variant="contained" color="success" onClick={()=>peticionPost()}>Inscribir</Button>
+      <Button className='cancelInsert' onClick={()=>handleClose()} color="error">Cancel</Button>
+      <Button className='inscribir' variant="contained" color="success" onClick={()=>peticionPost()}>Inscribir</Button>
     </Stack>
      </Box>
   </div>
@@ -320,12 +328,12 @@ export default function StickyHeadTable() {
      <Typography variant="h4" gutterBottom>
        Edicion Socio: {create && create.name}
       </Typography>           
-     <TextField id="filled-basic" label="Disabled" name='id' value={create && create.id} onChange={handleChange} disabled/>
+     <TextField id="filled-basic" label="Disabled"  name='id' value={create && create.id} onChange={handleChange} disabled/>
      <br/>
-     <TextField id="filled-basic" label="Nombre" variant="filled" name='name' value={create && create.name}  onChange={handleChange}/>
-     <TextField id="filled-basic" label="Email" variant="filled" name='email' value={create && create.email} onChange={handleChange}/>
-     <TextField id="filled-basic" label="Apellido" variant="filled" name='apellido' value={create && create.apellido} onChange={handleChange}/>
-     <TextField id="filled-basic" label="Nacimiento" variant="filled" name='nacimiento' value={create && create.nacimiento} onChange={handleChange}/>
+     <TextField id="filled-basic" label="Nombre" className='nameE' variant="filled" name='name' value={create && create.name}  onChange={handleChange}/>
+     <TextField id="filled-basic" label="Email" className='emailE' variant="filled" name='email' value={create && create.email} onChange={handleChange}/>
+     <TextField id="filled-basic" label="Apellido" className='apellidoE' variant="filled" name='apellido' value={create && create.apellido} onChange={handleChange}/>
+     <TextField id="filled-basic" label="Nacimiento" className='nacimientoE' variant="filled" name='nacimiento' value={create && create.nacimiento} onChange={handleChange}/>
      
      {/* <TextField id="filled-basic" label="Plan" variant="filled" name='plan' value={create && create.plan}  onChange={handleChange}/> */}
      <Box sx={{ width: '42%' ,paddingLeft: 1.2 }}>
@@ -338,6 +346,7 @@ export default function StickyHeadTable() {
           inputProps={{
             name: 'plan',
             id: 'filled-basic',
+            className:'planE',
           }}
           onChange={handleChange}
         >
@@ -348,8 +357,8 @@ export default function StickyHeadTable() {
         </NativeSelect>
       </FormControl>
       </Box>
-     <TextField id="filled-basic" label="DNI" variant="filled" name='dni' value={create && create.dni}  onChange={handleChange}/>
-     <TextField id="filled-basic" label="Telefono" variant="filled" name='telefono' value={create && create.telefono}  onChange={handleChange}/>
+     <TextField id="filled-basic" label="DNI" className='dniE' variant="filled" name='dni' value={create && create.dni}  onChange={handleChange}/>
+     <TextField id="filled-basic" label="Telefono" className='telE' variant="filled" name='telefono' value={create && create.telefono}  onChange={handleChange}/>
      <Box sx={{ width: '42%' ,paddingLeft: 1.2 }}>
        <FormControl fullWidth>
         <InputLabel variant="standard" htmlFor="filled-basic">
@@ -360,6 +369,7 @@ export default function StickyHeadTable() {
           inputProps={{
             name: 'status',
             id: 'filled-basic',
+            className:'statusE',
           }}
           onChange={handleChange}
         >
@@ -370,7 +380,7 @@ export default function StickyHeadTable() {
       </FormControl>
       
       </Box>
-      <TextField id="filled-basic" label="Fecha de alta" variant="filled" name='alta' value={create && create.alta} onChange={handleChange}/>
+      <TextField id="filled-basic" label="Fecha de alta" className='fechaAltaE' variant="filled" name='alta' value={create && create.alta} onChange={handleChange}/>
       <Box sx={{ width: '42%' ,paddingLeft: 1.2, paddingTop: 1, paddingBottom:1 }}>
         <Button
           variant="contained"
@@ -390,6 +400,7 @@ export default function StickyHeadTable() {
           inputProps={{
             name: 'estadoApto',
             id: 'filled-basic',
+            className:'estadoAptoE',
           }}
           onChange={handleChange}
         >
@@ -399,7 +410,7 @@ export default function StickyHeadTable() {
         </NativeSelect>
       </FormControl>
       </Box>
-      <TextField id="filled-basic" label="Vencimiento Apto Medico" variant="filled" name='vencimientoApto' value={create && create.vencimientoApto} onChange={handleChange}/>
+      <TextField id="filled-basic" label="Vencimiento Apto Medico" className='vencimientoAptoE' variant="filled" name='vencimientoApto' value={create && create.vencimientoApto} onChange={handleChange}/>
       <Box sx={{ width: '42%' ,paddingLeft: 1.2 }}>
        <FormControl fullWidth>
         <InputLabel variant="standard" htmlFor="filled-basic">
@@ -410,6 +421,7 @@ export default function StickyHeadTable() {
           inputProps={{
             name: 'cuponDescuento',
             id: 'filled-basic',
+            className:'cuponDescuentoE'
           }}
           onChange={handleChange}
         >
@@ -420,11 +432,11 @@ export default function StickyHeadTable() {
         </NativeSelect>
       </FormControl>
       </Box>
-      <TextField id="filled-basic" label="Nro Cupon de descuento" variant="filled" name='nroCupon' value={create && create.nroCupon} onChange={handleChange}/>
-      <TextField id="filled-basic" label="Valido hasta" variant="filled" name='validezCupon' value={create && create.validezCupon} onChange={handleChange}/>
+      <TextField id="filled-basic" label="Nro Cupon de descuento" className='nroCuponE' variant="filled" name='nroCupon' value={create && create.nroCupon} onChange={handleChange}/>
+      <TextField id="filled-basic" label="Valido hasta" variant="filled" className='validezCuponE' name='validezCupon' value={create && create.validezCupon} onChange={handleChange}/>
       <Stack direction="row" spacing={32} sx={{ paddingTop: 4, paddingLeft: 1 }} >
-        <Button onClick={()=>handleEdit()}  color="error">Cancel</Button>
-        <Button onClick={()=>peticionPut()} variant="contained" color="success">Guardar</Button>
+        <Button onClick={()=>handleEdit()} className='cancelarEdit' color="error">Cancel</Button>
+        <Button onClick={()=>peticionPut()} className='guardarEdit' variant="contained" color="success">Guardar</Button>
     </Stack>
    </Box>
 </div>
@@ -436,8 +448,8 @@ export default function StickyHeadTable() {
       Seguro quiere eliminar al socio {create && create.name}
     </Typography>
     <Stack direction="row" spacing={15} sx={{ paddingTop: 4 }} >
-  <Button onClick={()=>handleEliminar()} variant="outlined" color="success" >Cancel</Button>
-  <Button onClick={()=>peticionDelete()} variant="contained" color="error" >Eliminar</Button>
+  <Button onClick={()=>handleEliminar()} className="" variant="outlined" color="success" >Cancel</Button>
+  <Button onClick={()=>peticionDelete()} className="eliminarSocio" variant="contained" color="error" >Eliminar</Button>
   </Stack>
   </Box>
     )
@@ -445,13 +457,15 @@ export default function StickyHeadTable() {
     const bodyTimeline = (
       <Box sx={style}>
         <TimelinePagos/>
-      </Box>
+        <Button onClick={()=>handleHPagos()} className="cancelTimeline" variant="outlined" color="error" >Cerrar</Button>
+        </Box>
       
     )
 
     const bodyHistorialeEdicion = (
       <Box sx={style}>
         <HistorialEdicion/>
+        <Button onClick={()=>handleHEdicion()} className="cancelHE" variant="outlined" color="error" >Cerrar</Button>
       </Box>
       
     )
@@ -459,12 +473,13 @@ export default function StickyHeadTable() {
     const bodyInfo = (
       <Box sx={style}>
         <Informacion/>
+        <Button onClick={()=>handleInfo()} className="cancelInfo" variant="outlined" color="error" >Cerrar</Button>
       </Box>
       
     )
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    <Paper className='paper' sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }  }>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -480,7 +495,7 @@ export default function StickyHeadTable() {
              <TableCell>Cuenta Corriente</TableCell>
              <TableCell>Estado de apto medico</TableCell>
              <TableCell>Informacion</TableCell>
-             <TableCell>Historial <BorderColorIcon/></TableCell>
+             <TableCell>Ediciones</TableCell>
              <TableCell>Cupon de descuento</TableCell>
              <TableCell></TableCell>
              <TableCell></TableCell>
@@ -499,14 +514,14 @@ export default function StickyHeadTable() {
                <TableCell style={{color: socio.status === "Baja" ? 'red':"green"}}>{socio.status === "Baja"?('Baja'):(socio.alta)}</TableCell>
                <TableCell>{socio.email}{socio.email!== undefined ?<Link href={`mailto:${socio.email}`}><LaunchIcon sx={{fontSize: "medium"}}/></Link>: " "}</TableCell>
                <TableCell>
-                 <Button onClick={()=>handleHPagos()}>Pagos</Button>
+                 <Button className='pagos' onClick={()=>handleHPagos()}>Pagos</Button>
                  </TableCell>
                  <TableCell>
                  <PopupState variant="popover" popupId="demo-popup-popover">
                     {(popupState) => (
                       <div>
                         <Button variant="text" color={socio.estadoApto === "Aprobado"?'secondary': "error" }{...bindTrigger(popupState)}>
-                        {socio.estadoApto}
+                        <Typography sx={{fontSize: "small"}}>{socio.estadoApto}</Typography>
                         </Button>
                         <Popover
                           {...bindPopover(popupState)}
@@ -527,10 +542,10 @@ export default function StickyHeadTable() {
                   </PopupState>
                   </TableCell>
                   <TableCell>
-                  <Button onClick={()=>handleInfo()} sx={{color:'black'}}><PermContactCalendarIcon/></Button>
+                  <Button className='btnInfo' onClick={()=>handleInfo()} sx={{color:'black'}}><PermContactCalendarIcon/></Button>
                   </TableCell>
                   <TableCell>
-                  <Button onClick={()=>handleHEdicion()} sx={{color:'black'}}><ManageHistoryIcon/></Button>
+                  <Button className='btnHE' onClick={()=>handleHEdicion()} sx={{color:'black'}}><ManageHistoryIcon/></Button>
                   </TableCell>
                   <TableCell>
                     {socio.cuponDescuento !== "No tiene"? 
@@ -559,10 +574,10 @@ export default function StickyHeadTable() {
                   :<Typography sx={{paddingLeft: 2}}>No tiene</Typography>}
                   </TableCell>
                  <TableCell>
-                 <Button variant="contained" color="success" onClick={()=>selectSocio(socio, "Edit")} ><BorderColorIcon/></Button>
+                 <Button variant="contained" className='editIcon' color="success" onClick={()=>selectSocio(socio, "Edit")} ><BorderColorIcon/></Button>
                  </TableCell>
                  <TableCell>
-                 <Button variant="contained" color="error" onClick={()=>selectSocio(socio, 'Eliminar')} ><DeleteIcon/></Button>
+                 <Button variant="contained" className='deleteIcon' color="error" onClick={()=>selectSocio(socio, 'Eliminar')} ><DeleteIcon/></Button>
                  </TableCell>
                  {/* </Stack> */}
              </TableRow>
@@ -580,7 +595,7 @@ export default function StickyHeadTable() {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
       <TableCell>
-      <Button onClick={()=>handleClickOpen()}>Nuevo Socio</Button>
+      <Button id='nuevoSocio' onClick={()=>handleClickOpen()}>Nuevo Socio</Button>
       </TableCell>
       <Modal
      open={open}
