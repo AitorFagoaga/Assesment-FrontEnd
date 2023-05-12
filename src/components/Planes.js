@@ -18,7 +18,7 @@ export default function RecipeReviewCard() {
     <React.Fragment>
    <Stack direction="row" spacing={20}  >
         <Box sx={{ paddingLeft: 30, paddingTop: 15}}>
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 345,border:15, borderColor:'#1d1b1b' }}>
           
           <CardMedia
             component="img"
@@ -28,7 +28,7 @@ export default function RecipeReviewCard() {
             alt="Paella dish"
           />
           <CardContent>
-            <Typography variant="h3" color="black">
+            <Typography variant="h3" color="#ffff">
               PLAN 1
             </Typography>
             <Typography paragraph>
@@ -40,7 +40,7 @@ export default function RecipeReviewCard() {
         </Card>
         </Box>
         <Box sx={{paddingTop: 15}}>
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 345,border:15, borderColor:'#1d1b1b' }}>
           
           <CardMedia
             component="img"
@@ -50,7 +50,7 @@ export default function RecipeReviewCard() {
             alt="Paella dish"
           />
           <CardContent>
-          <Typography variant="h3" color="black">
+          <Typography variant="h3" color="#ffff">
               PLAN 2
             </Typography>
             <Typography paragraph>
@@ -62,7 +62,7 @@ export default function RecipeReviewCard() {
         </Card>
         </Box>
         <Box sx={{paddingTop: 15}}>
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 345, border:15, borderColor:'#1d1b1b' }}>
           
           <CardMedia
             component="img"
@@ -72,7 +72,7 @@ export default function RecipeReviewCard() {
             alt="Paella dish"
           />
           <CardContent>
-          <Typography variant="h3" color="black">
+          <Typography variant="h3" color="#ffff">
               PLAN 3
             </Typography>
             <Typography paragraph>
