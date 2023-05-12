@@ -14,11 +14,8 @@ Con este correra el json server como base de datos en [http://localhost:3004](ht
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Para correr la aplicacion.\ 
+Se abrira en el [http://localhost:3000](http://localhost:3000) .
 
 
 ### `npx cypress run`
@@ -29,7 +26,7 @@ Para correr cypress y hacer el test
 
 - Extra: Crud funcional
 
--- Tecnologías usadas:
+Tecnologías usadas:
 - React
 * Material-ui
 + Cypress
