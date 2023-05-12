@@ -87,10 +87,10 @@ export default function PersistentDrawerLeft() {
 
   return (
     
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', backgroundColor:"#1d1b1b" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
+      <AppBar position="fixed" open={open} >
+        <Toolbar >
           <IconButton
             color="inherit"
             aria-label="open drawer"

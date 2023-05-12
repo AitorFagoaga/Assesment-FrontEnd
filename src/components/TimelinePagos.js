@@ -10,7 +10,10 @@ import PaidIcon from '@mui/icons-material/Paid';
 import { green, red } from '@mui/material/colors';
 
 export default function CustomizedTimeline() {
+ 
+
   return (
+    <div>
     <Timeline position="alternate">
       <TimelineItem>
         <TimelineOppositeContent
@@ -106,5 +109,7 @@ export default function CustomizedTimeline() {
       </TimelineItem>
       
     </Timeline>
+    
+    </div>
   );
 }
